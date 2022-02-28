@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+
+{% load prettyjson %}
+
+
+{% block header %}
+    {{ block.super }}
+    {% prettyjson_setup %}
+{% endblock %}
+
+
+{% block content %}
+    <div id="products-block">
+        {% prettyjson ''|add:json_data %}
+    </div>
+{% endblock %}

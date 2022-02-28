@@ -1,0 +1,86 @@
+{% load static %}
+
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="robots" content="NONE,NOARCHIVE">
+
+        <title>Products – {{ path|get_dict_key_by_index:-1|get_dict_value:path }}</title>
+
+        <link rel="stylesheet" type="text/css" href="/static/rest_framework/css/bootstrap.min.css">
+        
+        <style>
+            .breadcrumb {
+                font-size: 20px;
+                margin: 15px;
+            }
+
+            .jsonwidget {
+                margin: 15px;
+                max-height: 80%;
+            }
+
+            .jsonwidget textarea {
+                width: 100%;
+                max-width: 100%;
+                max-height: inherit;
+            }
+
+            .jsonwidget div {
+                width: 100%;
+                max-width: 100%;
+                max-height: inherit;
+            }
+        </style>
+
+        {% block header %}
+        {% endblock %}
+    </head>
+
+    <body>
+
+        <div>
+            <div>
+                <ul class="breadcrumb">
+
+                    {% for url, title in path.items %}
+                        <li class="active"><a href="{{ url }}">{{ title }}</a></li>
+                    {% endfor %}
+
+                </ul>
+
+
+                <!-- Content -->
+                <div id="content" role="main" aria-label="content">
+
+                    {% block content %}
+                    {% endblock %}
+
+                </div><!-- /.content -->
+            </div><!-- /.container -->
+        </div><!-- ./wrapper -->
+
+        <script>
+            window.drf = {
+                csrfHeaderName: "X-CSRFTOKEN",
+                csrfToken: "bLlud3Co4zB5Z1VT4PtSuAAPYJIftnkPi0i9C3D7gSIJyP1fBOvH7fTHiH6vmeWQ"
+            };
+        </script>
+        <script src="/static/rest_framework/js/jquery-3.5.1.min.js"></script>
+        <script src="/static/rest_framework/js/ajax-form.js"></script>
+        <script src="/static/rest_framework/js/csrf.js"></script>
+        <script src="/static/rest_framework/js/bootstrap.min.js"></script>
+        <script src="/static/rest_framework/js/prettify-min.js"></script>
+        <script src="/static/rest_framework/js/default.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('form').ajaxForm();
+            });
+        </script>
+
+        {% block scripts %}
+        {% endblock %}
+
+    </body>
+</html>
