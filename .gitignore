@@ -5,3 +5,6 @@ env/
 testproject/__pycache__/
 testproject/*/__pycache__/
 testproject/*/*/__pycache__/
+
+# DRF migrations
+testproject/testapp/migrations/
