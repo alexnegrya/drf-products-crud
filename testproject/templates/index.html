@@ -2,113 +2,382 @@
 
 
 {% block header %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Connect Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
     <style>
-        .col {
-            height: 91vh;
+        #products {
+            border: 1px solid rgba(185, 185, 185, 0.466);
+            box-shadow: 5px 5px rgb(230, 230, 230);
+            padding: 15px;
+        }
+
+        .row {
+            margin: auto;
+            width: 97%;
             display: flex;
+            justify-content: center;
+        }
+
+        .col-sm-3 {
+            border: 2px solid lightgrey;
+            border-radius: 25px;
+            padding: 10px;
+            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hidden-container {
+            display: none;
+        }
+
+        .product-form-hidden {
+            font-size: 13px;
             flex-direction: column;
             justify-content: center;
         }
 
-        a {
-            color: black;
-            text-decoration: none;
+        .product-data {
+            margin-bottom: 5px;
         }
 
-        .row {
-            background-color: lightgrey;
-            text-align: center;
-            border-radius: 25px;
-            margin: 10px;
-            padding: 50px;
+        .product-image {
+            margin-bottom: 15%;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            max-height: 15%;
+        }
+        
+        .product-text-data {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 15%;
         }
 
-        #msg {
-            text-align: center;
+        .product-text-data div {
+            margin: 2px;
+        }
+
+        .product-name {
+            font-weight: 600;
             font-size: 20px;
+            line-height: 22px;
         }
 
-        .hidden-form {
-            display: none;
-            background-color: rgb(192, 192, 192);
-            border-radius: 10px;
-            font-size: 15px;
+        .product-data input {
+            margin-bottom: 10px;
+        }
+
+        .product-form-input {
+            max-width: 100%;
+        }
+
+        .action-buttons input {
+            font-weight: 700;
+            width: 100%;
+            margin: 1px;
+            height: 50px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .update-button {
+            background-color: rgb(0, 190, 0);
+        }
+
+        .delete-button {
+            background-color: rgb(228, 0, 0);
+        }
+
+        #create-product-container {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        #create-product-form {
+            background-color: rgba(144, 238, 144, 0.445);
+            padding: 15px;
+            margin-bottom: 0px;
+        }
+
+        #create-product-form h1 {
+            background-color: lightgreen;
             padding: 10px;
-            padding-top: 25px;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .crud-button:hover {
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer;
+        #create-product-form p {
+            display: flex;
+            justify-content: center;
+        }
+
+        #create-product-form p label {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0px;
+        }
+
+        #create-product-form p * {
+            width: 100%;
+            font-size: 15px;
+        }
+
+        #create-button {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            padding: 15px;
+            border-radius: 40px;
+            font-size: 20px;
+            background-color: rgb(0, 216, 0);
         }
     </style>
 {% endblock %}
 
 
 {% block content %}
-    <div class="col">
-        {% if request.session.msg %}
-            <h2 id="msg">{{ request.session.msg }}</h2>
-        {% endif %}
-        <div class="row hidden-form" id="update-form">
-            <form action="{% url 'redirect_to_update' %}" method="get">
-                {{ form.as_table }}
-                <input type="submit" value="Update product">
-            </form>
-        </div>
-        <div class="row hidden-form" id="delete-form">
-            <form action="{% url 'redirect_to_delete' %}" method="get">
-                {{ form.as_table }}
-                <input type="submit" value="Delete product">
-            </form>
+    <div id="products">
+        <div class="hidden-container" id="products-not-found">
+            <img src="https://cdn-icons-png.flaticon.com/128/4076/4076503.png"
+                style="display: block; margin-left: auto; margin-right: auto; width: 10%;">
+            <h1 style="text-align: center; margin-top: 10px;">At the moment there are no products...</h1>
         </div>
 
-        <a href="{% url 'products' %}" class="crud-button">
-            <div class="row" id="view-products">
-                <h1>View products</h1>
-            </div>
-        </a>
-        <a href="{% url 'create_product' %}" class="crud-button">
-            <div class="row">
-                <h1>Create product</h1>
-            </div>
-        </a>
-        <a class="crud-button" onclick="changeFormVisibility('update-form')">
-            <div class="row">
-                <h1>Update product</h1>
-            </div>
-        </a>
-        <a class="crud-button" onclick="changeFormVisibility('delete-form')">
-            <div class="row">
-                <h1>Delete product</h1>
-            </div>
-        </a>
+        {% if products|length > 0 %}
+            {% for row in products %}
+                <div class="row flex-nowrap">
+                    {% for product in row %}
+                        <input type="hidden" value="{% generate_uuid4 %}" id="form-id-{{ product.pk }}">
+                        <form action="{% url 'main' %}" method="POST" class="col-sm-3" onclick="this.id = getProductUuid4('form-id-{{ product.pk }}')" onmouseleave="hideProductForm('{{ product.pk }}')">
+                            <input type="hidden" value="{{ product.pk }}" name="pk">
+                            
+                            <div class="product-data" id="product-data-{{ product.pk }}" onclick="showProductForm('{{ product.pk }}')">
+                                <div class="product-form-hidden hidden-container" id="product-form-{{ product.pk }}">
+                                    {% get_product_form product.pk %}
+                                </div>
+
+                                <div class="product-image" id="product-image-{{ product.pk }}" title="{{ data_title }}"><img src="{{ product.image_url }}" title="{{ data_title }}"></div>
+                                
+                                <div class="product-text-data col" title="{{ data_title }}">
+                                    <div class="product-name" id="product-name-{{ product.pk }}">{{ product.name }}</div>
+                                    <div class="product-price" id="product-price-{{ product.pk }}" style="font-family: 'Courier New', Courier, monospace; font-size: 25px; letter-spacing: 0.1px;">{{ product.price }}</div>
+                                    <div class="product-creator" id="product-creator-{{ product.pk }}" style="font-size: 15px;">&check; {{ product.creator }}</div>
+                                    <div class="product-create-date" id="product-create-date-{{ product.pk }}" style="font-size: 13px;">&#8986; {{ product.create_date }}</div>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <input type="submit" value="Update" class="update-button" onclick="updateProduct('{{ product.pk }}')">
+                                <input type="button" value="Delete" class="delete-button" onclick="deleteProduct('{{ product.pk }}')">
+                            </div>
+                        </form>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <img src="https://cdn-icons-png.flaticon.com/128/4076/4076503.png" style="display: block; margin-left: auto; margin-right: auto; width: 10%;">
+            <h1 style="text-align: center; margin-top: 10px;">At the moment there are no products...</h1>
+        {% endif %}
+
+        <div class="row flex-nowrap" id="create-product-container">
+            <form action="{% url 'main' %}" method="POST" id="create-product-form">
+                <input type="hidden" value="create" name="pk">
+                <h1>Create new product</h1>
+                {{ product_form.as_p }}
+                <input type="submit" value="Create" id="create-button">
+            </form>
+        </div>
     </div>
 {% endblock %}
 
 
 {% block scripts %}
-    <script>
-        function changeFormVisibility(form_id) {
-            let form = document.getElementById(form_id);
-            if (form.style.display === 'none') {
-                form.style.display = 'block'
-            } else {
-                form.style.display = 'none'
+    <script type="text/javascript">
+        if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+
+
+        var createDate = document.querySelector('#create-product-form #id_create_date')
+        createDate.value = '{% get_now_datetime %}'
+
+
+        var productsContainer = document.getElementById('products')
+        productsContainer.addEventListener('mouseover', function() {
+            var products = document.getElementsByClassName('col-sm-3');
+            var allNull = true
+
+            for (let i = 0; i < products.length; i++) {
+                if (products[i].style.display !== 'none') {
+                    allNull = false
+                }
             };
+
+            if (allNull) {
+                productsContainer.innerHTML = document.getElementById('products-not-found').innerHTML
+            }
+        })
+
+
+        function getProductFormAndFields(id) {
+            var form = document.getElementById(`product-form-${id}`);
+            var fields = document.querySelectorAll(`#product-image-${id}, #product-name-${id}, #product-price-${id}, #product-creator-${id}, #product-create-date-${id}`);
+
+            var map = new Map();
+            map.set('form', form);
+            map.set('fields', fields);
+            return map
         };
+
+        function showProductForm(id) {
+            var data = getProductFormAndFields(id);
+            var form = data.get('form');
+            var fields = data.get('fields');
+
+            if (form.style.display === 'flex') {
+                document.getElementById(`product-data-${id}`).setAttribute('onclick', '')
+            } else {
+                for (let i = 0; i < fields.length; i++) {
+                    fields[i].style.display = 'none'
+                };
+
+                form.style.display = 'flex'
+
+                var allFields = document.querySelectorAll('input[name="image_url"], input[name="name"], input[name="price"], input[name="creator"], input[name="create_date"]');
+
+                for (let i = 0; i < allFields.length; i++) {
+                    allFields[i].classList.add('product-form-input');
+                    if (isNaN(allFields[i].id.slice(-1))) {
+                        allFields[i].id += `_${id}`
+                    }
+                };
+            }
+        };
+
+        function isSpaceString(str) {
+            if (!str.replace(/\s/g, '').length) {
+                return true
+            } else {
+                return false
+            }
+        };
+
+        var productsData = document.getElementsByClassName('product-data');
+        for (let i = 0; i < productsData.length; i++) {
+            productsData[i].addEventListener('mouseenter', function() {
+                var productsForms = document.getElementsByClassName('product-form-hidden');
+
+                if (productsForms[i].style.display == 'none' && productsData[i].getAttribute('onclick') == null || isSpaceString(productsData[i].getAttribute('onclick')) || productsData[i].getAttribute('onclick') === 'undefined') {
+                    var id = productsData[i].id;
+                    var pk = new String()
+                    for (let si = 0; si < id.length; si++) {
+                        if (!isNaN(id[si])) {
+                            pk += id[si]
+                        }
+                    };
+                    productsData[i].setAttribute('onclick', showProductForm(pk))
+                }
+            })
+        };
+
+        function hideProductForm(id) {
+            var data = getProductFormAndFields(id);
+            var form = data.get('form');
+            var fields = data.get('fields');
+
+            form.style.display = 'none';
+            for (let i = 0; i < fields.length; i++) {
+                fields[i].style.display = 'block'
+            }
+        };
+
+        function sendRequest(url, method, data) {
+            const XHR = new XMLHttpRequest(),
+                FD = new FormData();
+
+            // Push our data into our FormData object
+            for (name in data) {
+                FD.append(name, data[name]);
+            }
+
+            // // Define what happens on successful data submission
+            // XHR.addEventListener('load', function (event) {
+            //     alert('Yeah! Data sent and response loaded.');
+            // });
+
+            // // Define what happens in case of error
+            // XHR.addEventListener(' error', function (event) {
+            //     alert('Oops! Something went wrong.');
+            // });
+
+            // Set up our request
+            XHR.open(method, url);
+
+            // Send our FormData object; HTTP headers are set automatically
+            XHR.send(FD);
+
+            // _callback();
+        };
+
+        function getProductUuid4(id) {
+            return document.querySelector(`input[id='${id}']`).value
+        };
+
+        function updateProduct(id) {
+            sendRequest(
+                document.getElementById(getProductUuid4(`form-id-${id}`)).action,
+                'POST',
+                {
+                    'pk': id,
+                    'image_url': document.getElementById(`id_image_url_${id}`).value,
+                    'name': document.getElementById(`id_name_${id}`).value,
+                    'price': document.getElementById(`id_price_${id}`).value,
+                    'creator': document.getElementById(`id_creator_${id}`).value,
+                    'create_date': document.getElementById(`id_create_date_${id}`).value,
+                }
+            )
+        };
+
+        async function deleteProduct(id) {
+            if (document.getElementById(getProductUuid4(`form-id-${id}`)) !== null) {
+                var form = document.getElementById(getProductUuid4(`form-id-${id}`));
+
+                sendRequest(
+                    form.action,
+                    'DELETE',
+                    {'pk': id}
+                );
+
+                form.style.display = 'none'
+            } else {
+                await new Promise(r => setTimeout(r, 1000));
+                deleteProduct(id)
+            }
+        };
+
+
+
+
+        // function addElements(id) {
+        //     var that = document.getElementById(id);
+
+
+        //     var form = document.createElement('div')
+        //     form.innerHTML = ``
+
+
+        //     // move all elements in the other container.
+        //     while (that.firstChild) {
+        //         form.appendChild(that.firstChild);
+        //     }
+        //     that.parentNode.replaceChild(form, that);
+        // }
     </script>
 {% endblock %}
