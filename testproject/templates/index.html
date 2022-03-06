@@ -209,8 +209,21 @@
         createDate.value = '{% get_now_datetime %}'
 
 
+        // function addCreateForm() {
+        //     var that = document.getElementById('products');
+
+        //     var notFound = document.getElementById('products-not-found');
+        //     var createProduct = document.getElementById('create')
+
+        //     // move all elements in the other container.
+        //     while (that.firstChild) {
+        //         form.appendChild(that.firstChild);
+        //     }
+        //     that.parentNode.replaceChild(form, that);
+        // }
+
         var productsContainer = document.getElementById('products')
-        productsContainer.addEventListener('mouseover', function() {
+        productsContainer.addEventListener('load', function() {
             var products = document.getElementsByClassName('col-sm-3');
             var allNull = true
 
@@ -220,8 +233,14 @@
                 }
             };
 
+            var notFound = document.getElementById('products-not-found');
+
             if (allNull) {
-                productsContainer.innerHTML = document.getElementById('products-not-found').innerHTML
+                notFound.style.display = 'block';
+
+                productsContainer.innerHTML = notFound.outerHTML + document.getElementById('create-product-container').outerHTML
+            } else {
+                notFound.style.display = 'none'
             }
         })
 
@@ -361,23 +380,5 @@
                 deleteProduct(id)
             }
         };
-
-
-
-
-        // function addElements(id) {
-        //     var that = document.getElementById(id);
-
-
-        //     var form = document.createElement('div')
-        //     form.innerHTML = ``
-
-
-        //     // move all elements in the other container.
-        //     while (that.firstChild) {
-        //         form.appendChild(that.firstChild);
-        //     }
-        //     that.parentNode.replaceChild(form, that);
-        // }
     </script>
 {% endblock %}
