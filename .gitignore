@@ -8,3 +8,6 @@ testproject/*/*/__pycache__/
 
 # DRF migrations
 testproject/testapp/migrations/
+
+# App byte file
+testproject/products_pk_list
