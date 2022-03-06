@@ -209,42 +209,6 @@
         createDate.value = '{% get_now_datetime %}'
 
 
-        // function addCreateForm() {
-        //     var that = document.getElementById('products');
-
-        //     var notFound = document.getElementById('products-not-found');
-        //     var createProduct = document.getElementById('create')
-
-        //     // move all elements in the other container.
-        //     while (that.firstChild) {
-        //         form.appendChild(that.firstChild);
-        //     }
-        //     that.parentNode.replaceChild(form, that);
-        // }
-
-        var productsContainer = document.getElementById('products')
-        productsContainer.addEventListener('load', function() {
-            var products = document.getElementsByClassName('col-sm-3');
-            var allNull = true
-
-            for (let i = 0; i < products.length; i++) {
-                if (products[i].style.display !== 'none') {
-                    allNull = false
-                }
-            };
-
-            var notFound = document.getElementById('products-not-found');
-
-            if (allNull) {
-                notFound.style.display = 'block';
-
-                productsContainer.innerHTML = notFound.outerHTML + document.getElementById('create-product-container').outerHTML
-            } else {
-                notFound.style.display = 'none'
-            }
-        })
-
-
         function getProductFormAndFields(id) {
             var form = document.getElementById(`product-form-${id}`);
             var fields = document.querySelectorAll(`#product-image-${id}, #product-name-${id}, #product-price-${id}, #product-creator-${id}, #product-create-date-${id}`);
