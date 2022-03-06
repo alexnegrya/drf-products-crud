@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from logging import Filter
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,6 +30,54 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGGING_CONFIG = None
+
+TESTING_MODE = True
+
+class NotInTestingFilter(Filter):
+    def filter(self, record):
+        from django.conf import settings
+        return not settings.TESTING_MODE
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'testing': {
+            '()': NotInTestingFilter
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': ('%(levelname)s %(asctime)s %(module)s '
+                       '%(process)d %(thread)d %(message)s')
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'filters': ['testing'],
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'foo': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    }
+}
+
+FORCE_SCRIPT_NAME = '/'
+
+
+ABSOLUTE_URL_OVERRIDES = {}
+
+AUTH_USER_MODEL = 'auth.User'
+
+LOCALE_PATHS = []
 
 # Application definition
 
@@ -89,6 +138,15 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+DEFAULT_TABLESPACE  = ''
+
+DEFAULT_INDEX_TABLESPACE = ''
+
+DATABASE_ROUTERS = []
+
+
+PRODUCTS_PK_LIST = []
 
 
 # Password validation
