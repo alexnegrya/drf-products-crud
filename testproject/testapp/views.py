@@ -145,18 +145,9 @@ class ProductsView(views.APIView):
 
     # Delete product
     def delete(self, request):
-        pr = self.previous_request
-        self.previous_request = request
-
         try:
             Products.objects.get(pk=request.POST['pk']).delete()
         except Products.DoesNotExist:
             pass
 
-        try:
-            if pr.body != request.body:
-                return Response(self.get_basic_context())
-            else:
-                return redirect('main')
-        except AttributeError:
-            return Response(self.get_basic_context())
+        return Response(self.get_basic_context())
