@@ -1,17 +1,12 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import models
 from rest_framework import viewsets, permissions, views
 from .serializers import UserSerializer, GroupSerializer
 from .models import Products
 from rest_framework.response import Response
 from django.template.defaulttags import register
-from django.utils import timezone
 from rest_framework.renderers import TemplateHTMLRenderer
-from django.core import serializers
-from django.db import DatabaseError
 from datetime import datetime
 from dateutil import parser as datetime_parser
-from typing import Iterable
 import math
 import uuid
 from .forms import ProductForm
@@ -26,6 +21,9 @@ def generate_uuid4():
 
 @register.simple_tag
 def get_product_form(pk):
+    """
+    Get Product form with initial model data.
+    """
     try:
         pk = int(pk)
         product = Products.objects.get(pk=pk)
@@ -42,6 +40,9 @@ def get_product_form(pk):
 
 @register.simple_tag
 def get_now_datetime():
+    """
+    Get current datatime without timezone info.
+    """
     dt_str = str(datetime_parser.isoparse(str(datetime.now())))
     dt_str = dt_str[:dt_str.find('.')]
     return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S')
@@ -85,6 +86,9 @@ class ProductsView(views.APIView):
     product_form = ProductForm
     
     def separate_products(self, products, cols=4):
+        """
+        Separate list of Products into list of lists with length == specified columns (cols).
+        """
         sep_prods = []
         prods = []
         start_index = 0
