@@ -1,4 +1,5 @@
 # DRF Products CRUD
+Test app for make virtual products **CRUD** using **Django REST Framework** abilities.
 
 ## Installation
 
@@ -15,7 +16,7 @@
 ## Usage
 
 This works in folder "**testproject**".
-- To run server execute default Django command for this.
+- To run server execute default Django command for this - `python manage.py runserver`.
 - Extra feature - manage Products models for test. Execute `python test_products.py <action>` for this. Supported actions:
   - `create` - Create test Products models
   - `delete` - Delete test Products models
