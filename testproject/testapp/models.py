@@ -7,7 +7,7 @@ class Products(models.Model):
     price = models.FloatField()
     image_url = models.CharField(max_length=100000)
     creator = models.CharField(max_length=100)
-    create_date = models.DateTimeField(default=timezone.now())
+    create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.name} ({self.pk})'
+        return f"{self.name} ({self.pk})"
