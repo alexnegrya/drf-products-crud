@@ -5,4 +5,4 @@
 __pycache__/
 
 # Bytes file with test products IDs
-testproject/products_pk_list
+project/products_pk_list

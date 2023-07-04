@@ -3,19 +3,17 @@ Test app for make virtual products **CRUD** using **Django REST Framework** abil
 
 ## Installation
 
-- Install PostgreSQL and create database "**testproject**"
+- Install PostgreSQL and create database "**drf_products_crud**" - `sudo -u postgres psql -c 'create database drf_products_crud owner postgres'`
 - Clone repo - `git clone https://github.com/alexnegrya/drf-products-crud`
-- Enter into "**drf-products-crud**" folder
+- Enter into project folder ("**drf-products-crud**")
 - With already installed Python with Pip:
   - Install requirements - `pip install -r requirements.txt`
-  - Enter into "**testproject**" folder
-  - Migrate DRF models - `python manage.py migrate`
-  - Make migrations for Products model - `python manage.py makemigrations testapp`
-  - Migrate Products model - `python manage.py migrate`
+  - Enter into "**project**" folder
+  - Apply Django migrations - `python manage.py migrate`
 
 ## Usage
 
-This works in folder "**testproject**".
+This works in folder "**project**" only.
 - To run server execute default Django command for this - `python manage.py runserver`.
 - Extra feature - manage Products models for test. Execute `python test_products.py <action>` for this. Supported actions:
   - `create` - Create test Products models
