@@ -1,5 +1,5 @@
 # DRF Products CRUD
-Test app for make virtual products **CRUD** using **Django REST Framework** abilities.
+Django web app for virtual products **CRUD** using **Django REST Framework**.
 
 ## Installation
 
